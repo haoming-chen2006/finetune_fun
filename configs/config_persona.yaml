@@ -1,0 +1,38 @@
+# Persona-Chat Fine-tuning Configuration
+
+# Model
+model_name: "Qwen/Qwen3-8B"
+
+# Data - load from local arrow file
+dataset_path: "/home/haoming/finetune_fun/data/persona_chat/data-00000-of-00001.arrow"
+seq_len: 512
+
+# Training
+seed: 42
+epochs: 3
+lr: 3e-4
+batch_size: 8
+gradient_accumulation_steps: 4
+max_grad_norm: 1.0
+warmup_steps: 100
+weight_decay: 0.01
+
+# LoRA Configuration
+lora:
+  r: 8
+  lora_alpha: 32
+  lora_dropout: 0.1
+  target_modules: null
+  bias: "none"
+
+# Persona-specific Configuration
+persona:
+  train_on_user: 1          # Train on User 1's responses (1 or 2)
+  max_turns: null           # Max conversation turns (null = all turns)
+  include_persona: true     # Include persona traits as context
+  persona_index: 0          # Train on specific persona index (null = all)
+
+# Output
+out_dir: "runs/persona"
+save_steps: 500
+log_steps: 10

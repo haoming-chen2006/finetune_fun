@@ -1,0 +1,37 @@
+# 19th Century Books Fine-tuning Configuration
+
+# Model
+model_name: "Qwen/Qwen3-8B"
+
+# Data (uses HuggingFace cache at ~/.cache/huggingface/datasets/)
+dataset_name: "TheBritishLibrary/blbooks"
+dataset_config: "1500_1899"
+dataset_split: "train"
+seq_len: 512
+text_column: "text"
+
+# Training
+seed: 42
+epochs: 3
+lr: 3e-4
+batch_size: 8
+gradient_accumulation_steps: 4
+max_grad_norm: 1.0
+warmup_steps: 100
+weight_decay: 0.01
+
+# LoRA Configuration
+lora:
+  r: 8                    # rank of low-rank matrices (higher = more params)
+  lora_alpha: 32          # scaling factor (typically 2-4x r)
+  lora_dropout: 0.1       # dropout for LoRA layers
+  target_modules: null    # null = auto-detect, or ["q_proj", "v_proj"] etc
+  bias: "none"            # "none", "all", or "lora_only"
+
+# Output
+out_dir: "runs/19thcentury"
+save_steps: 500
+log_steps: 10
+
+# Device (auto-detected if not specified)
+# device: "cuda"
